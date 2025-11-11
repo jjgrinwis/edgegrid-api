@@ -1,3 +1,71 @@
 {
-  "policies": []
+  "policies": [
+    {
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/create-auth-header)"
+      },
+      "name": "custom-code-inbound",
+      "policyType": "custom-code-inbound"
+    },
+    {
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/create-auth-header)"
+      },
+      "name": "custom-code-inbound-1",
+      "policyType": "custom-code-inbound"
+    },
+    {
+      "handler": {
+        "export": "default",
+        "module": "$import(./modules/create-auth-header)"
+      },
+      "name": "custom-code-inbound-2",
+      "policyType": "custom-code-inbound"
+    },
+    {
+      "handler": {
+        "export": "BasicAuthInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "accounts": [
+            {
+              "password": "username",
+              "username": "password"
+            }
+          ],
+          "allowUnauthenticatedRequests": false
+        }
+      },
+      "name": "basic-auth-inbound",
+      "policyType": "basic-auth-inbound"
+    },
+    {
+      "handler": {
+        "export": "ApiKeyInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "allowUnauthenticatedRequests": false,
+          "cacheTtlSeconds": 60
+        }
+      },
+      "name": "api-key-inbound",
+      "policyType": "api-key-inbound"
+    },
+    {
+      "handler": {
+        "export": "CachingInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "cacheHttpMethods": [
+            "GET"
+          ],
+          "expirationSecondsTtl": 60
+        }
+      },
+      "name": "caching-inbound",
+      "policyType": "caching-inbound"
+    }
+  ]
 }

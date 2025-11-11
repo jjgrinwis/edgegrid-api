@@ -7,15 +7,18 @@
     "dev": "zuplo dev",
     "test": "zuplo test",
     "docs": "npm run dev --workspace docs",
-    "lint": "eslint"
+    "lint": "eslint",
+    "bundle": "node ./bundle.mjs"
   },
   "dependencies": {
+    "@akamai/edgegrid-auth": "file:akamai-edgegrid-auth-0.0.2.tgz",
     "zuplo": "^6"
   },
   "devDependencies": {
     "@types/node": "^22",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
+    "esbuild": "^0.27.0",
     "eslint": "^8",
     "eslint-config-prettier": "^9",
     "prettier": "^3",
