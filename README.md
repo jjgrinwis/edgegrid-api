@@ -4,7 +4,7 @@ A Zuplo-based API gateway that proxies authenticated requests to the Akamai Edge
 
 ## Overview
 
-This project provides a secure API proxy for accessing Akamai's Edge Diagnostics API. It handles EdgeGrid authentication automatically, allowing you to make authenticated requests to Akamai's API endpoints without managing the complex authentication process in your client applications.
+This project provides a secure API proxy for accessing Akamai's Edge Diagnostics API. It handles EdgeGrid authentication automatically, allowing you to make authenticated requests to Akamai's API endpoints without managing the complex authentication process in your client applications. You can add any of the available inbound Authentication policies into your Zuplo gateway to protect the endpoints.
 
 ## Features
 
@@ -15,32 +15,9 @@ This project provides a secure API proxy for accessing Akamai's Edge Diagnostics
 - TypeScript support
 - Environment-based credential management
 
-## Prerequisites
-
-- Node.js (v18 or later recommended)
-- Zuplo CLI
-- Akamai EdgeGrid API credentials:
-  - Client Token
-  - Client Secret
-  - Access Token
-  - API Host
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd edgegrid-api
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
 ## Configuration
 
-Set up the required environment variables for Akamai authentication:
+Set up the required environment variables for Akamai authentication in .env in your local Zuplo development environment:
 
 ```bash
 AKAMAI_CLIENT_TOKEN=your_client_token
@@ -51,32 +28,6 @@ AKAMAI_HOST=your_api_host.akamaiapis.net
 
 These credentials can be obtained from your Akamai Control Center under Identity & Access Management.
 
-## Usage
-
-### Development
-
-Run the development server:
-
-```bash
-npm run dev
-```
-
-### Testing
-
-Run tests:
-
-```bash
-npm test
-```
-
-### Building
-
-Bundle the project:
-
-```bash
-npm run bundle
-```
-
 ## API Endpoints
 
 The proxy forwards requests to the Akamai Edge Diagnostics API v1 (`/edge-diagnostics/v1`). All API endpoints are automatically authenticated using your configured EdgeGrid credentials.
@@ -84,16 +35,18 @@ The proxy forwards requests to the Akamai Edge Diagnostics API v1 (`/edge-diagno
 ### Example Requests
 
 **Locate IP Address:**
+
 ```bash
 POST /edge-diagnostics/v1/ip-addresses
 Content-Type: application/json
 
 {
-  "ipAddresses": ["84.27.144.50"]
+  "ipAddresses": ["2.16.106.208"]
 }
 ```
 
 **Get Edge Locations:**
+
 ```bash
 GET /edge-diagnostics/v1/edge-locations
 ```
@@ -103,7 +56,6 @@ GET /edge-diagnostics/v1/edge-locations
 ```
 edgegrid-api/
 ├── modules/
-│   ├── create-auth-header.ts    # EdgeGrid authentication policy
 │   ├── edgegrid-call.ts          # Main proxy handler
 │   └── third-party/              # Third-party dependencies
 │       └── @akamai/
@@ -118,17 +70,8 @@ edgegrid-api/
 ## How It Works
 
 1. **Request Reception**: The API receives an incoming request to a proxied endpoint
-2. **Authentication**: The EdgeGrid authentication policy (`create-auth-header.ts`) generates the required authentication headers using your Akamai credentials
-3. **Request Forwarding**: The authenticated request is forwarded to the Akamai Edge Diagnostics API (`edgegrid-call.ts`)
-4. **Response Handling**: The response from Akamai is returned to the client
-
-## Development
-
-### Linting
-
-```bash
-npm run lint
-```
+2. **Request Forwarding**: The request is forwarded to request handler that will calculate the EdgeGrid header and calls the endpoint. (`edgegrid-call.ts`)
+3. **Response Handling**: The response from Akamai is returned to the client
 
 ### Documentation
 
@@ -142,7 +85,7 @@ npm run docs
 
 - **Zuplo**: API gateway platform
 - **TypeScript**: Type-safe JavaScript
-- **Akamai EdgeGrid Auth**: Official Akamai authentication library
+- **Akamai EdgeGrid Auth**: Akamai authentication library
 - **ESBuild**: Fast JavaScript bundler
 
 ## Security
